@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  AdminPanel – EvilTester Admin Dashboard Suite
+  Run with: mvn test
+  Note: Alerts are browser-blocking – parallel="methods" for non-alert tests,
+  alert tests run serially within their test group.
+-->
+<suite name="AdminPanel – EvilTester Suite"
+       verbose="1"
+       thread-count="2"
+       parallel="methods">
+
+    <listeners>
+        <listener class-name="com.adminpanel.listeners.TestListener"/>
+    </listeners>
+
+    <!-- Module 1: Form Interactions -->
+    <test name="Form Interaction Tests">
+        <classes>
+            <class name="com.adminpanel.tests.FormInteractionTest">
+                <methods>
+                    <include name="testFormSubmissionFromExcel"/>
+                    <include name="testDropdownSelection"/>
+                    <include name="testRadioButtonSelection"/>
+                    <include name="testEmptyFormSubmission"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Module 2: Table Operations -->
+    <test name="Table Operation Tests">
+        <classes>
+            <class name="com.adminpanel.tests.TableOperationTest">
+                <methods>
+                    <include name="testSortableTableHasHeaders"/>
+                    <include name="testSortableTableColumnSort"/>
+                    <include name="testPagedTableFirstPage"/>
+                    <include name="testPagedTableNextPage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Module 3: Alerts – serial to avoid parallel alert conflicts -->
+    <test name="Alert Dialog Tests" parallel="false">
+        <classes>
+            <class name="com.adminpanel.tests.AlertDialogTest">
+                <methods>
+                    <include name="testAcceptAlert"/>
+                    <include name="testAcceptConfirm"/>
+                    <include name="testDismissConfirm"/>
+                    <include name="testPromptDialog"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Module 4: Dynamic Elements -->
+    <test name="Dynamic Element Tests">
+        <classes>
+            <class name="com.adminpanel.tests.DynamicElementTest">
+                <methods>
+                    <include name="testDynamicFieldAppearsAfterTrigger"/>
+                    <include name="testInteractWithDynamicElement"/>
+                    <include name="testRedirectPage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Module 5: Frames -->
+    <test name="Frame Tests">
+        <classes>
+            <class name="com.adminpanel.tests.FrameTest">
+                <methods>
+                    <include name="testSwitchToFrameAndInteract"/>
+                    <include name="testFrameTextContent"/>
+                    <include name="testReturnToMainContent"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

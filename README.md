@@ -1,148 +1,98 @@
-# AdminPanel-Automation-Framework
-AdminPanel Automation Framework – A robust Selenium Java Test Automation Framework built using Page Object Model (POM) and TestNG to automate a web-based admin dashboard. Covers forms, tables, alerts, dynamic elements, and frames with reusable design, data-driven testing, and detailed reporting.
+# AdminPanel – EvilTester Admin Dashboard Automation Framework
 
-# 🚀 AdminPanel – Selenium Java Automation Framework
+## AUT
+**URL:** https://testpages.eviltester.com/styled/index.html
+**No registration needed** – public test practice site
 
-## 📌 Overview
+## Page URLs Used
+| Module | Page | URL |
+|---|---|---|
+| Forms | Basic HTML Form | /styled/basic-html-form-test.html |
+| Tables | Sortable Table | /styled/tag/table.html |
+| Tables | Paged Table | /styled/paged-table-test.html |
+| Alerts | Alert/Confirm/Prompt | /styled/alerts/alert-test.html |
+| Dynamic | Dynamic Fields | /styled/dynamic/dynamic-fields-test.html |
+| Dynamic | Redirects | /styled/redirects-test.html |
+| Frames | iFrames | /styled/iframes/iframes-test.html |
 
-AdminPanel is a **Selenium WebDriver + Java Test Automation Framework** designed to test a web-based admin dashboard application.
-It follows **Page Object Model (POM)** architecture for scalability, reusability, and maintainability.
+## Tech Stack
+| Tool | Version |
+|---|---|
+| Java | 11+ |
+| Selenium | 4.18.1 |
+| TestNG | 7.9.0 |
+| WebDriverManager | 5.7.0 |
+| ExtentReports | 5.1.1 |
+| Apache POI | 5.2.5 (Excel) |
+| Jackson | 2.16.1 (JSON) |
 
-The framework automates **end-to-end UI scenarios** including forms, tables, alerts, dynamic elements, and frames.
-
----
-
-## 🎯 Features
-
-* ✅ Page Object Model (POM) design
-* ✅ TestNG framework with annotations & DataProviders
-* ✅ WebDriverManager (no manual driver setup)
-* ✅ Explicit waits using WebDriverWait
-* ✅ Config-driven execution (browser, URL, timeout)
-* ✅ Screenshot capture on failure
-* ✅ ExtentReports HTML reporting
-* ✅ Retry mechanism for flaky tests
-* ✅ Clean and reusable architecture
-
----
-
-## 🌐 Application Under Test
-
-🔗 https://testpages.eviltester.com/styled/index.html
-
-Modules covered:
-
-* Forms
-* Tables
-* Alerts
-* Dynamic Elements
-* Frames
-
----
-
-## 🧱 Project Structure
-
+## Project Structure
 ```
-AdminPanelFramework/
-│
-├── src/test/java
-│   ├── tests/           → Test classes (TestNG)
-│   ├── pages/           → Page Object classes
-│   ├── utils/           → Utilities (ConfigReader, Waits, Listeners)
-│   ├── dataproviders/   → Test data handling
-│
-├── src/main/resources
-│   └── config.properties
-│
-├── screenshots/         → Failure screenshots
-├── test-output/         → Reports
-├── pom.xml              → Maven dependencies
-├── testng.xml           → Test suite configuration
-```
-
----
-
-## ⚙️ Tech Stack
-
-* Java
-* Selenium WebDriver
-* TestNG
-* Maven
-* WebDriverManager
-* ExtentReports
-
----
-
-## 🔧 Configuration (config.properties)
-
-```
-browser=chrome
-base.url=https://testpages.eviltester.com/styled/index.html
-timeout=15
+AdminPanel/
+├── pom.xml
+├── testng.xml
+├── screenshots/                      ← auto-created on failure
+├── test-output/
+│   └── AdminPanelReport.html         ← auto-generated after run
+└── src/
+    ├── main/java/com/adminpanel/
+    │   ├── config/ConfigReader.java
+    │   ├── pages/
+    │   │   ├── BasePage.java          ← waitForElement + switchToAlert
+    │   │   ├── FormPage.java          ← Module 1
+    │   │   ├── TablePage.java         ← Module 2
+    │   │   ├── AlertPage.java         ← Module 3
+    │   │   ├── DynamicPage.java       ← Module 4
+    │   │   └── FramePage.java         ← Module 5
+    │   ├── utils/
+    │   │   ├── DriverManager.java
+    │   │   ├── ScreenshotUtil.java
+    │   │   ├── ExtentReportManager.java
+    │   │   └── RetryAnalyzer.java
+    │   └── listeners/TestListener.java
+    └── test/
+        ├── java/com/adminpanel/
+        │   ├── dataproviders/TestDataProvider.java
+        │   └── tests/
+        │       ├── BaseTest.java
+        │       ├── FormInteractionTest.java   ← Module 1
+        │       ├── TableOperationTest.java    ← Module 2
+        │       ├── AlertDialogTest.java       ← Module 3
+        │       ├── DynamicElementTest.java    ← Module 4
+        │       └── FrameTest.java             ← Module 5
+        └── resources/
+            ├── config.properties
+            ├── formData.json
+            └── testdata.xlsx (FormData + AlertData sheets)
 ```
 
----
+## Eclipse Setup
+1. File → Import → Maven → Existing Maven Projects → browse to AdminPanel
+2. Right-click pom.xml → Maven → Update Project (Alt+F5)
+3. Run: `mvn test`
 
-## 🧪 Test Modules
+## Test Count Breakdown
+| Module | Tests | Data Source |
+|---|---|---|
+| 1 – Forms | 3 (Excel DP) + 3 = 6 | testdata.xlsx FormData |
+| 2 – Tables | 4 | inline |
+| 3 – Alerts | 4 | inline |
+| 4 – Dynamic | 3 | inline |
+| 5 – Frames | 3 | inline |
+| **Total** | **20** | |
 
-### 1️⃣ Form Interactions
-
-* Fill forms and validate submission
-* Handle dropdowns, radio buttons, checkboxes
-* Validate empty input behavior
-
-### 2️⃣ Table Operations
-
-* Sort table columns
-* Validate pagination behavior
-
-### 3️⃣ Alerts & Dialogs
-
-* Handle Alert, Confirm, Prompt
-* Validate results after interaction
-
-### 4️⃣ Dynamic Elements
-
-* Handle hidden/dynamic fields
-* Validate visibility and interaction
-* Verify redirects
-
-### 5️⃣ Frames
-
-* Switch to iframe and nested frames
-* Validate content inside frames
-* Switch back to main page
-
----
-
-## ▶️ How to Run
-
-### Run via Maven
-
-```
-mvn clean test
-```
-
-### Run via TestNG
-
-* Right click → `testng.xml` → Run
-
----
-
-## 📊 Reporting
-
-* ExtentReports HTML generated after execution
-* Includes:
-
-  * Test status (Pass/Fail)
-  * Logs
-  * Screenshots on failure
-
----
-
-## 📸 Screenshot on Failure
-
-* Automatically captured using TestNG Listener
-* Stored in `/screenshots/` with timestamp
-
----
+## All Hackathon Requirements Met
+| Requirement | Implementation |
+|---|---|
+| 5 Page classes + BasePage | FormPage, TablePage, AlertPage, DynamicPage, FramePage |
+| BasePage.switchToAlert() | Built into BasePage as required by spec |
+| No Thread.sleep() | WebDriverWait + FluentWait only |
+| No hardcoded values | config.properties + testdata.xlsx + formData.json |
+| @DataProvider from Excel | FormData sheet via Apache POI |
+| @DataProvider from JSON | formData.json via Jackson |
+| Screenshot on failure | TestListener auto-captures with timestamp |
+| ExtentReports HTML | test-output/AdminPanelReport.html |
+| Parallel execution | thread-count="2" (Alerts run serially) |
+| Retry on failure | RetryAnalyzer (1 retry per test) |
+| Headless mode | headless=true in config.properties |
+| mvn test via testng.xml | Surefire plugin configured |
